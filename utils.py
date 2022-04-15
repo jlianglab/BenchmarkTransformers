@@ -1,4 +1,4 @@
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_auc_score, accuracy_score
 import torch
 import numpy as np
 

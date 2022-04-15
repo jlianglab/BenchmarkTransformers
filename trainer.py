@@ -1,5 +1,5 @@
 from utils import MetricLogger, ProgressLogger
-from models import ClassificationNet
+from models import ClassificationNet, build_classification_model
 import time
 import torch
 from tqdm import tqdm
@@ -65,7 +65,7 @@ def evaluate(data_loader_val, device, model, criterion):
 
 
 def test_classification(checkpoint, data_loader_test, device, args):
-  model = ClassificationNet(args)
+  model = build_classification_model(args)
   print(model)
 
   modelCheckpoint = torch.load(checkpoint)

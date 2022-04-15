@@ -159,7 +159,7 @@ def classification_engine(args, model_path, output_path, diseases, dataset_train
         if test_diseases is not None:
           y_test = copy.deepcopy(y_test[:,test_diseases])
           p_test = copy.deepcopy(p_test[:, test_diseases])
-          individual_results = metric_AUROC(y_test, p_test, len(test_diseases))
+          individual_results = metric_AUROC(y_test, p_test, len(test_diseases))          
         else:
           individual_results = metric_AUROC(y_test, p_test, args.num_class)
         print(">>{}: AUC = {}".format(experiment, np.array2string(np.array(individual_results), precision=4, separator=',')))

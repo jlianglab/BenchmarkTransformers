@@ -21,7 +21,11 @@ def build_classification_model(args):
         print('Loading pretrained {} weights for {} from timm.'.format(args.init, args.model_name))
         if args.model_name.lower() == "vit_base":
             if args.init.lower() =="random":
-                model = timm.create_model('vit_base_patch16_224', num_classes=args.num_class, pretrained=False)
+                model = VisionTransformer(num_classes=args.num_class,
+                        patch_size=16, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4, qkv_bias=True, drop_path_rate=0.1,
+                        norm_layer=partial(nn.LayerNorm, eps=1e-6))
+                model.default_cfg = _cfg()
+                # model = timm.create_model('vit_base_patch16_224', num_classes=args.num_class, pretrained=False)
             elif args.init.lower() =="imagenet_1k":
                 model = timm.create_model('vit_base_patch16_224', num_classes=args.num_class, pretrained=True)
             elif args.init.lower() =="imagenet_21k":
@@ -29,6 +33,10 @@ def build_classification_model(args):
             elif args.init.lower() =="sam":
                 model = timm.create_model('vit_base_patch16_224_sam', num_classes=args.num_class, pretrained=True)
             elif args.init.lower() =="dino":
+                model = VisionTransformer(num_classes=args.num_class,
+                        patch_size=16, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4, qkv_bias=True,
+                        norm_layer=partial(nn.LayerNorm, eps=1e-6))
+                model.default_cfg = _cfg()
                 #model = timm.create_model('vit_base_patch16_224_dino', num_classes=args.num_class, pretrained=True) #not available in current timm version
                 url = "https://dl.fbaipublicfiles.com/dino/dino_vitbase16_pretrain/dino_vitbase16_pretrain.pth"
                 state_dict = torch.hub.load_state_dict_from_url(url=url)
@@ -47,6 +55,10 @@ def build_classification_model(args):
                 model = timm.create_model('vit_small_patch16_224_in21k', num_classes=args.num_class, pretrained=True)
             elif args.init.lower() =="dino":
                 #model = timm.create_model('vit_small_patch16_224_dino', num_classes=args.num_class, pretrained=True)
+                model = VisionTransformer(num_classes=args.num_class,
+                    patch_size=16, embed_dim=384, depth=12, num_heads=6, mlp_ratio=4, qkv_bias=True,
+                    norm_layer=partial(nn.LayerNorm, eps=1e-6))
+                model.default_cfg = _cfg()
                 url = "https://dl.fbaipublicfiles.com/dino/dino_deitsmall16_pretrain/dino_deitsmall16_pretrain.pth"
                 state_dict = torch.hub.load_state_dict_from_url(url=url)
                 model.load_state_dict(state_dict, strict=False)
@@ -62,7 +74,9 @@ def build_classification_model(args):
                 model = timm.create_model('swin_base_patch4_window7_224_in22k', num_classes=args.num_class, pretrained=True)
    
         elif args.model_name.lower() == "swin_tiny": 
-            if args.init.lower() =="imagenet_21k":
+            if args.init.lower() =="random":
+                model = timm.create_model('swin_tiny_patch4_window7_224', num_classes=args.num_class, pretrained=False)
+            elif args.init.lower() =="imagenet_21k":
                 model = timm.create_model('swin_tiny_patch4_window7_224', num_classes=args.num_class, pretrained=True)
         
     elif os.path.isfile(args.pretrained_weights):

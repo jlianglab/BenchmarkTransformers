@@ -222,6 +222,8 @@ def update_config(config, args):
         return False
 
     # merge from specific arguments
+    if _check_args('num_class'):
+        config.MODEL.NUM_CLASSES = args.num_class
     if _check_args('batch_size'):
         config.DATA.BATCH_SIZE = args.batch_size
     if _check_args('data_path'):

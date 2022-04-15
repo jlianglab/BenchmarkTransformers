@@ -43,6 +43,7 @@ def get_args_parser():
     parser.add_option("--mode", dest="mode", help="train | test", default="train", type="string")
     parser.add_option("--batch_size", dest="batch_size", help="batch size", default=64, type="int")
     parser.add_option("--epochs", dest="epochs", help="num of epoches", default=200, type="int")
+    parser.add_option("--exp_name", dest="exp_name", default="", type="string")
 
     # Optimizer parameters
     parser.add_option('--opt', default='momentum', type=str, metavar='OPTIMIZER',
@@ -121,8 +122,7 @@ def main(args):
     assert args.test_list is not None
     #if args.init.lower() != 'imagenet' and args.init.lower() != 'random':
     #    assert args.proxy_dir is not None
-
-    args.exp_name = args.model_name + "_" + args.init
+    args.exp_name = args.model_name + "_" + args.init + args.exp_name
     model_path = os.path.join("./Models/Classification",args.data_set)
     output_path = os.path.join("./Outputs/Classification",args.data_set)
 
