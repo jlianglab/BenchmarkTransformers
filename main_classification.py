@@ -171,7 +171,20 @@ def main(args):
 
 
         classification_engine(args, model_path, output_path, diseases, dataset_train, dataset_val, dataset_test)
+    
+    elif args.data_set == "VinDrCXR":
+        diseases = ['COPD', 'Lung tumor', 'Pneumonia', 'Tuberculosis', 'Other diseases', 'No finding']
+        dataset_train = VinDrCXR(images_path=args.data_dir, file_path=args.train_list,
+                                    augment=build_transform_classification(normalize=args.normalization, mode="train"), annotation_percent=args.anno_percent)
 
+        dataset_val = VinDrCXR(images_path=args.data_dir, file_path=args.val_list,
+                                  augment=build_transform_classification(normalize=args.normalization, mode="valid"), annotation_percent=args.anno_percent)
+
+        dataset_test = VinDrCXR(images_path=args.data_dir, file_path=args.test_list,
+                                   augment=build_transform_classification(normalize=args.normalization, mode="test"), annotation_percent=args.anno_percent)
+
+
+        classification_engine(args, model_path, output_path, diseases, dataset_train, dataset_val, dataset_test)
 
 if __name__ == '__main__':
     args = get_args_parser()

@@ -271,6 +271,49 @@ class ShenzhenCXR(Dataset):
 
     return len(self.img_list)
 
+# ---------------------------------------------Downstream VinDrCXR------------------------------------------
+class VinDrCXR(Dataset):
+    def __init__(self, images_path, file_path, augment, anno_percent=100):
+        self.img_list = []
+        self.img_label = []
+        self.augment = augment
+
+        with open(file_path, "r") as fr:
+            line = fr.readline().strip()
+            while line:
+                lineItems = line.split()
+                imagePath = os.path.join(images_path, lineItems[0]+".jpeg")
+                imageLabel = lineItems[1:]
+                imageLabel = [int(i) for i in imageLabel]
+                self.img_list.append(imagePath)
+                self.img_label.append(imageLabel)
+                line = fr.readline()
+
+        if anno_percent < 100:
+            indexes = np.arange(len(self.img_list))
+            random.Random(99).shuffle(indexes)
+            num_data = int(indexes.shape[0] * anno_percent / 100.0)
+            indexes = indexes[:num_data]
+
+            _img_list, _img_label = copy.deepcopy(self.img_list), copy.deepcopy(self.img_label)
+            self.img_list = []
+            self.img_label = []
+
+            for i in indexes:
+                self.img_list.append(_img_list[i])
+                self.img_label.append(_img_label[i])
+
+    def __getitem__(self, index):
+
+        imagePath = self.img_list[index]
+        imageLabel = torch.FloatTensor(self.img_label[index])
+        imageData = Image.open(imagePath).convert('RGB')
+        if self.augment != None: imageData = self.augment(imageData)
+        return imageData, imageLabel
+    def __len__(self):
+
+        return len(self.img_list)
+
 
 #__________________________________________Lung Segmentation, Montgomery dataset --------------------------------------------------
 class MontgomeryDataset(Dataset):
