@@ -68,7 +68,7 @@ def build_classification_model(args):
         elif args.model_name.lower() == "swin_base": 
             if args.init.lower() =="random":
                 model = timm.create_model('swin_base_patch4_window7_224_in22k', num_classes=args.num_class, pretrained=False)
-            elif args.init.lower() =="imagenet_1k":
+            elif args.init.lower() =="imagenet_21kto1k":
                 model = timm.create_model('swin_base_patch4_window7_224', num_classes=args.num_class, pretrained=True)
             elif args.init.lower() =="imagenet_21k":
                 model = timm.create_model('swin_base_patch4_window7_224_in22k', num_classes=args.num_class, pretrained=True)
@@ -76,7 +76,7 @@ def build_classification_model(args):
         elif args.model_name.lower() == "swin_tiny": 
             if args.init.lower() =="random":
                 model = timm.create_model('swin_tiny_patch4_window7_224', num_classes=args.num_class, pretrained=False)
-            elif args.init.lower() =="imagenet_21k":
+            elif args.init.lower() =="imagenet_1k":
                 model = timm.create_model('swin_tiny_patch4_window7_224', num_classes=args.num_class, pretrained=True)
         
     elif os.path.isfile(args.pretrained_weights):

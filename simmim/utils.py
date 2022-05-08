@@ -120,7 +120,7 @@ def load_pretrained(config, model):
     
     del checkpoint
     torch.cuda.empty_cache()
-    print(">>>>>>>>>> loaded successfully '{config.PRETRAINED}'")
+    print(">>>>>>>>>> loaded successfully '{}'".format(config.PRETRAINED))
     
 
 def remap_pretrained_keys_swin(model, checkpoint_model):
