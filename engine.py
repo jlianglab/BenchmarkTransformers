@@ -11,6 +11,7 @@ import copy
 
 from models import build_classification_model, save_checkpoint
 from utils import metric_AUROC
+from sklearn.metrics import accuracy_score
 
 import torch
 import torch.backends.cudnn as cudnn
@@ -59,7 +60,8 @@ def classification_engine(args, model_path, output_path, diseases, dataset_train
       patience_counter = 0
       save_model_path = os.path.join(model_path, experiment)
       criterion = torch.nn.BCEWithLogitsLoss()
-
+      if args.data_set == "RSNAPneumonia":
+        criterion = torch.nn.CrossEntropyLoss()
       model = build_classification_model(args)
       print(model)
 
@@ -144,6 +146,7 @@ def classification_engine(args, model_path, output_path, diseases, dataset_train
   if not os.path.isfile(log_file):
     print("log_file ({}) not exists!".format(log_file))
   else:
+    accuracy = []
     mean_auc = []
     with open(log_file, 'r') as reader, open(output_file, 'a') as writer:
       experiment = reader.readline()
@@ -156,6 +159,12 @@ def classification_engine(args, model_path, output_path, diseases, dataset_train
 
         y_test, p_test = test_classification(saved_model, data_loader_test, device, args)
 
+        if args.data_set == "RSNAPneumonia":
+          acc = accuracy_score(np.argmax(y_test.cpu().numpy(),axis=1),np.argmax(p_test.cpu().numpy(),axis=1))
+          print(">>{}: ACCURACY = {}".format(experiment,acc))
+          writer.write(
+            "{}: ACCURACY = {}\n".format(experiment, np.array2string(np.array(acc), precision=4, separator='\t')))
+          accuracy.append(acc)
         if test_diseases is not None:
           y_test = copy.deepcopy(y_test[:,test_diseases])
           p_test = copy.deepcopy(p_test[:, test_diseases])
@@ -181,5 +190,8 @@ def classification_engine(args, model_path, output_path, diseases, dataset_train
       writer.write("Mean AUC over All trials = {:.4f}\n".format(np.mean(mean_auc)))
       print(">> STD over All trials:  = {:.4f}".format(np.std(mean_auc)))
       writer.write("STD over All trials:  = {:.4f}\n".format(np.std(mean_auc)))
-
+      if args.data_set == "RSNAPneumonia":
+        accuracy = np.array(accuracy)
+        print(">> All trials: ACCURACY  = {}".format(np.array2string(accuracy, precision=4, separator=',')))
+        writer.write("All trials: ACCURACY  = {}\n".format(np.array2string(accuracy, precision=4, separator='\t')))
 

@@ -18,9 +18,8 @@ def train_one_epoch(data_loader_train, device,model, criterion, optimizer, epoch
   end = time.time()
   for i, (samples, targets) in enumerate(data_loader_train):
     samples, targets = samples.float().to(device), targets.float().to(device)
-
+    
     outputs = model(samples)
-
     loss = criterion(outputs, targets)
 
     optimizer.zero_grad()
@@ -50,7 +49,6 @@ def evaluate(data_loader_val, device, model, criterion):
       samples, targets = samples.float().to(device), targets.float().to(device)
 
       outputs = model(samples)
-
       loss = criterion(outputs, targets)
 
       losses.update(loss.item(), samples.size(0))
@@ -102,7 +100,10 @@ def test_classification(checkpoint, data_loader_test, device, args):
       varInput = torch.autograd.Variable(samples.view(-1, c, h, w).cuda())
 
       out = model(varInput)
-      out = torch.sigmoid(out)
+      if args.data_set == "RSNAPneumonia":
+        out = torch.softmax(out,dim = 1)
+      else:
+        out = torch.sigmoid(out)
       outMean = out.view(bs, n_crops, -1).mean(1)
       p_test = torch.cat((p_test, outMean.data), 0)
 

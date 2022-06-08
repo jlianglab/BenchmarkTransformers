@@ -28,7 +28,7 @@ def get_args_parser():
     parser.add_option("--pretrained_weights", dest="pretrained_weights", help="Path to the Pretrained model", default=None, type="string")
     parser.add_option("--num_class", dest="num_class", help="number of the classes in the downstream task",
                       default=14, type="int")
-    parser.add_option("--data_set", dest="data_set", help="ChestXray14|CheXpert|Shenzhen", default="ChestXray14", type="string")
+    parser.add_option("--data_set", dest="data_set", help="ChestXray14|CheXpert|Shenzhen|VinDrCXR|RSNAPneumonia", default="ChestXray14", type="string")
     parser.add_option("--normalization", dest="normalization", help="how to normalize data (imagenet|chestx-ray)", default="imagenet",
                       type="string")
     parser.add_option("--img_size", dest="img_size", help="input image resolution", default=224, type="int")
@@ -131,12 +131,12 @@ def main(args):
                     'Pneumonia', 'Pneumothorax', 'Consolidation', 'Edema',
                     'Emphysema', 'Fibrosis', 'Pleural_Thickening', 'Hernia']
         dataset_train = ChestXray14Dataset(images_path=args.data_dir, file_path=args.train_list,
-                                           augment=build_transform_classification(normalize=args.normalization, mode="train"))
+                                           augment=build_transform_classification(normalize=args.normalization, mode="train"),annotation_percent=args.anno_percent)
 
         dataset_val = ChestXray14Dataset(images_path=args.data_dir, file_path=args.val_list,
-                                         augment=build_transform_classification(normalize=args.normalization, mode="valid"))
+                                         augment=build_transform_classification(normalize=args.normalization, mode="valid"),annotation_percent=args.anno_percent)
         dataset_test = ChestXray14Dataset(images_path=args.data_dir, file_path=args.test_list,
-                                          augment=build_transform_classification(normalize=args.normalization, mode="test"))
+                                          augment=build_transform_classification(normalize=args.normalization, mode="test"),annotation_percent=args.anno_percent)
 
         classification_engine(args, model_path, output_path, diseases, dataset_train, dataset_val, dataset_test)
 
@@ -181,6 +181,19 @@ def main(args):
                                   augment=build_transform_classification(normalize=args.normalization, mode="valid"), annotation_percent=args.anno_percent)
 
         dataset_test = VinDrCXR(images_path=args.data_dir, file_path=args.test_list,
+                                   augment=build_transform_classification(normalize=args.normalization, mode="test"), annotation_percent=args.anno_percent)
+
+
+        classification_engine(args, model_path, output_path, diseases, dataset_train, dataset_val, dataset_test)
+    elif args.data_set == "RSNAPneumonia":
+        diseases = ['No Lung Opacity/Not Normal', 'Normal', 'Lung Opacity']
+        dataset_train = RSNAPneumonia(images_path=args.data_dir, file_path=args.train_list,
+                                    augment=build_transform_classification(normalize=args.normalization, mode="train"), annotation_percent=args.anno_percent)
+
+        dataset_val = RSNAPneumonia(images_path=args.data_dir, file_path=args.val_list,
+                                  augment=build_transform_classification(normalize=args.normalization, mode="valid"), annotation_percent=args.anno_percent)
+
+        dataset_test = RSNAPneumonia(images_path=args.data_dir, file_path=args.test_list,
                                    augment=build_transform_classification(normalize=args.normalization, mode="test"), annotation_percent=args.anno_percent)
 
 
