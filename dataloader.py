@@ -364,6 +364,61 @@ class RSNAPneumonia(Dataset):
 
     return len(self.img_list)
 
+# ---------------------------------------------Downstream ISIC2019------------------------------------------
+        
+class ISIC2019(Dataset):
+
+  def __init__(self, images_path, file_path, augment, num_class=8, annotaion_percent=100):
+
+    self.img_list = []
+    self.img_label = []
+    self.augment = augment
+
+    with open(file_path, "r") as fileDescriptor:
+      line = True
+
+      while line:
+        line = fileDescriptor.readline()
+
+        if line:
+          lineItems = line.split(',')
+
+          imagePath = os.path.join(images_path, lineItems[0])
+          imageLabel = lineItems[1:num_class+1]
+          imageLabel = [int(i) for i in imageLabel]
+
+          self.img_list.append(imagePath)
+          self.img_label.append(imageLabel)
+
+    indexes = np.arange(len(self.img_list))
+    if annotaion_percent < 100:
+      random.Random(99).shuffle(indexes)
+      num_data = int(indexes.shape[0] * annotaion_percent / 100.0)
+      indexes = indexes[:num_data]
+
+      _img_list, _img_label = copy.deepcopy(self.img_list), copy.deepcopy(self.img_label)
+      self.img_list = []
+      self.img_label = []
+
+      for i in indexes:
+        self.img_list.append(_img_list[i])
+        self.img_label.append(_img_label[i])
+
+  def __getitem__(self, index):
+
+    imagePath = self.img_list[index]
+
+    imageData = Image.open(imagePath).convert('RGB')
+    imageLabel = torch.FloatTensor(self.img_label[index])
+
+    if self.augment != None: imageData = self.augment(imageData)
+
+    return imageData, imageLabel
+
+  def __len__(self):
+
+    return len(self.img_list)
+
 
 #__________________________________________Lung Segmentation, Montgomery dataset --------------------------------------------------
 class MontgomeryDataset(Dataset):

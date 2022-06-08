@@ -60,7 +60,7 @@ def classification_engine(args, model_path, output_path, diseases, dataset_train
       patience_counter = 0
       save_model_path = os.path.join(model_path, experiment)
       criterion = torch.nn.BCEWithLogitsLoss()
-      if args.data_set == "RSNAPneumonia":
+      if args.data_set == "RSNAPneumonia" or args.data_set =="ISIC2019":
         criterion = torch.nn.CrossEntropyLoss()
       model = build_classification_model(args)
       print(model)

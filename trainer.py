@@ -100,7 +100,7 @@ def test_classification(checkpoint, data_loader_test, device, args):
       varInput = torch.autograd.Variable(samples.view(-1, c, h, w).cuda())
 
       out = model(varInput)
-      if args.data_set == "RSNAPneumonia":
+      if args.data_set == "RSNAPneumonia" or args.data_set == "ISIC2019":
         out = torch.softmax(out,dim = 1)
       else:
         out = torch.sigmoid(out)
