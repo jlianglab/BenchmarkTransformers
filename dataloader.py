@@ -88,7 +88,7 @@ def build_transform_segmentation():
 
 class ChestXray14Dataset(Dataset):
 
-  def __init__(self, images_path, file_path, augment, num_class=14, annotaion_percent=100):
+  def __init__(self, images_path, file_path, augment, num_class=14, annotation_percent=100):
 
     self.img_list = []
     self.img_label = []
@@ -111,9 +111,9 @@ class ChestXray14Dataset(Dataset):
           self.img_label.append(imageLabel)
 
     indexes = np.arange(len(self.img_list))
-    if annotaion_percent < 100:
+    if annotation_percent < 100:
       random.Random(99).shuffle(indexes)
-      num_data = int(indexes.shape[0] * annotaion_percent / 100.0)
+      num_data = int(indexes.shape[0] * annotation_percent / 100.0)
       indexes = indexes[:num_data]
 
       _img_list, _img_label = copy.deepcopy(self.img_list), copy.deepcopy(self.img_label)
@@ -273,7 +273,7 @@ class ShenzhenCXR(Dataset):
 
 # ---------------------------------------------Downstream VinDrCXR------------------------------------------
 class VinDrCXR(Dataset):
-    def __init__(self, images_path, file_path, augment, num_class=6, annotaion_percent=100):
+    def __init__(self, images_path, file_path, augment, num_class=6, annotation_percent=100):
         self.img_list = []
         self.img_label = []
         self.augment = augment
@@ -368,7 +368,7 @@ class RSNAPneumonia(Dataset):
         
 class ISIC2019(Dataset):
 
-  def __init__(self, images_path, file_path, augment, num_class=8, annotaion_percent=100):
+  def __init__(self, images_path, file_path, augment, num_class=8, annotation_percent=100):
 
     self.img_list = []
     self.img_label = []
@@ -391,9 +391,9 @@ class ISIC2019(Dataset):
           self.img_label.append(imageLabel)
 
     indexes = np.arange(len(self.img_list))
-    if annotaion_percent < 100:
+    if annotation_percent < 100:
       random.Random(99).shuffle(indexes)
-      num_data = int(indexes.shape[0] * annotaion_percent / 100.0)
+      num_data = int(indexes.shape[0] * annotation_percent / 100.0)
       indexes = indexes[:num_data]
 
       _img_list, _img_label = copy.deepcopy(self.img_list), copy.deepcopy(self.img_label)
