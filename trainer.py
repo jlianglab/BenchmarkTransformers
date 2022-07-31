@@ -100,7 +100,7 @@ def test_classification(checkpoint, data_loader_test, device, args):
       varInput = torch.autograd.Variable(samples.view(-1, c, h, w).cuda())
 
       out = model(varInput)
-      if args.data_set == "RSNAPneumonia" or args.data_set == "ISIC2019":
+      if args.data_set == "RSNAPneumonia":
         out = torch.softmax(out,dim = 1)
       else:
         out = torch.sigmoid(out)
@@ -109,42 +109,6 @@ def test_classification(checkpoint, data_loader_test, device, args):
 
   return y_test, p_test
 
-def test_segmentation(model, model_save_path,data_loader_test, device,log_writter):
-    print("testing....", file=log_writter)
-    checkpoint = torch.load(model_save_path)
-    state_dict = checkpoint["state_dict"]
-    for k in list(state_dict.keys()):
-      if k.startswith('module.'):
-        state_dict[k[len("module."):]] = state_dict[k]
-        del state_dict[k]
-    model.load_state_dict(state_dict)
-    if torch.cuda.device_count() > 1:
-      model = torch.nn.DataParallel(model)
-    model.to(device)
-    with torch.no_grad():
-        test_p = None
-        test_y = None
-        model.eval()
-        for batch_ndx, (x_t, y_t) in enumerate(tqdm(data_loader_test)):
-            x_t, y_t = x_t.float().to(device), y_t.float().to(device)
-            pred_t = model(x_t)
-            if test_p is None and test_y is None:
-                test_p = pred_t
-                test_y = y_t
-            else:
-                test_p = torch.cat((test_p, pred_t), 0)
-                test_y = torch.cat((test_y, y_t), 0)
 
-            if (batch_ndx + 1) % 5 == 0:
-                print("Testing Step[{}]: ".format(batch_ndx + 1) , file=log_writter)
-                log_writter.flush()
-
-        print("Done testing iteration!", file=log_writter)
-        log_writter.flush()
-
-    test_p = test_p.cpu().detach().numpy()
-    test_y = test_y.cpu().detach().numpy()
-
-    return test_y, test_p
 
 
