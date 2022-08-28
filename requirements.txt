@@ -1,4 +1,4 @@
-numpy==1.18.1
+numpy
 tqdm
 sklearn
 scikit-image==0.16.2
