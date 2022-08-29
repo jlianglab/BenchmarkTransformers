@@ -17,7 +17,7 @@ import torch
 import torch.backends.cudnn as cudnn
 from torch.utils.data import DataLoader
 #from torch.optim.lr_scheduler import ReduceLROnPlateau
-from trainer import train_one_epoch,test_classification,evaluate,test_segmentation
+from trainer import train_one_epoch,test_classification,evaluate
 #import segmentation_models_pytorch as smp
 from utils import cosine_anneal_schedule,dice,mean_dice_coef
 
