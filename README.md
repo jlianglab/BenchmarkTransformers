@@ -64,14 +64,14 @@ You can download the pretrained models used/developed in our paper as follows:
 <td>Swin-Base</td>
 <td>ImageNet &#8594; X-rays(926K)</td>
 <td>SimMIM &#8594; SimMIM</td>   
-<td><a href="https://zenodo.org/record/">download</a></td>
+<td><a href="https://zenodo.org/record/7101953/files/simmim_swinb_ImageNet_Xray926k.pth?download=1">download</a></td>
 
 </tr>
 <tr> 
  <td>Swin-Base</td>
 <td>ImageNet &#8594; ChestX-ray14</td>
 <td>SimMIM &#8594; SimMIM</td>   
-<td><a href="https://zenodo.org/record/">download</a></td>
+<td><a href="https://zenodo.org/record/7101953/files/simmim_swinb_ImageNet_ChestXray14.pth?download=1">download</a></td>
  </tr>
 
 <tr >
@@ -79,12 +79,12 @@ You can download the pretrained models used/developed in our paper as follows:
 <td>Swin-Base</td>
 <td>X-rays(926K)</td>
 <td>SimMIM</td>   
-<td><a href="https://zenodo.org/record/">download</a></td>
+<td><a href="https://zenodo.org/record/7101953/files/simmim_swinb_Scratch_Xray926k.pth?download=1">download</a></td>
 <tr >
 <td>Swin-Base</td>
 <td>ChestX-ray14</td>
 <td>SimMIM</td>   
-<td><a href="https://zenodo.org/record/">download</a></td>
+<td><a href="https://zenodo.org/record/7101953/files/simmim_swinb_Scratch_ChestXray14.pth?download=1">download</a></td>
 </tr>
 
  
