@@ -4,7 +4,7 @@ We benchmark how well existing transformer variants that use various (supervised
 
 
 
-<p align="center"><img width=60% alt="FrontCover" src="media/FrontCover.png"></p>
+<p align="center"><img width=60% alt="FrontCover" src="https://github.com/Mda233/BenchmarkTransformers/blob/main/media/FrontCover.png"></p>
 
 ## Publication
 <b>Benchmarking and Boosting Transformers for Medical Image Classification </b> <br/>
@@ -19,7 +19,7 @@ International Conference on Medical Image Computing and Computer Assisted Interv
 
 1. **Pre-training is more vital for transformer-based models than for CNNs in medical imaging.**
 
-<p align="center"><img width=90% alt="Result1" src="media/Result1.png"></p>
+<p align="center"><img width=90% alt="Result1" src="https://github.com/Mda233/BenchmarkTransformers/blob/main/media/Result1.png"></p>
 
 In medical imaging, good initialization is more vital for transformer-based models than for CNNs.  When training from scratch, transformers perform significantly worse than CNNs on all target tasks. However, with supervised or self-supervised pre-training on ImageNet, transformers can offer the same results as CNNs, highlighting the importance of pre-training when using transformers for medical imaging tasks. We conduct statistical analysis between the best of six pre-trained transformer models and the best of three pre-trained CNN models.
 
@@ -27,7 +27,7 @@ In medical imaging, good initialization is more vital for transformer-based mode
 
 2. **Self-supervised learning based on masked image modeling is a preferable option to supervised baselines for medical imaging.**
 
-<p align="center"><img width=90% alt="Result2" src="media/Result2.png"></p>
+<p align="center"><img width=90% alt="Result2" src="https://github.com/Mda233/BenchmarkTransformers/blob/main/media/Result2.png"></p>
 
 Self-supervised SimMIM model with the Swin-B backbone outperforms fully- supervised baselines. The best methods are bolded while the second best are underlined. For every target task, we conduct statistical analysis between the best (bolded) vs. others. Green-highlighted boxes indicate no statistically significant difference at the p = 0.05 level.
 
@@ -35,7 +35,7 @@ Self-supervised SimMIM model with the Swin-B backbone outperforms fully- supervi
 
 3. **Self-supervised domain-adaptive pre-training on a larger-scale domain-specific dataset better bridges the domain gap between photographic and medical imaging.**
 
-<p align="center"><img width=90% alt="Result3" src="media/Result3.png"></p>
+<p align="center"><img width=90% alt="Result3" src="https://github.com/Mda233/BenchmarkTransformers/blob/main/media/Result3.png"></p>
 
 The domain-adapted pre-trained model which utilized a large number of in- domain data (X-rays(926K)) in an SSL manner achieves the best performance across all five target tasks. The best methods are bolded while the second best are underlined. For each target task, we conducted the independent two sample t-test between the best (bolded) vs. others. The absence of a statistically significant difference at the p = 0.05 level is indicated by green-highlighted boxes.
 
