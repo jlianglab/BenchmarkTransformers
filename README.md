@@ -4,7 +4,7 @@ We benchmark how well existing transformer variants that use various (supervised
 
 
 
-<p align="center"><img width=60% alt="FrontCover" src="figures/FrontCover.png"></p>
+<p align="center"><img width=60% alt="FrontCover" src="media/FrontCover.png"></p>
 
 ## Publication
 <b>Benchmarking and Boosting Transformers for Medical Image Classification </b> <br/>
@@ -13,13 +13,13 @@ We benchmark how well existing transformer variants that use various (supervised
 
 International Conference on Medical Image Computing and Computer Assisted Intervention ([MICCAI 2022](https://conferences.miccai.org/2022/en/)); Domain Adaptation and Representation Transfer (DART) 
 
-[Paper] | [Code](https://github.com/jlianglab/BenchmarkTransformers) | [Poster] | [Slides] | Presentation ([YouTube](https://youtu.be/VMyU8UWLPFg))
+[Paper](https://link.springer.com/chapter/10.1007/978-3-031-16852-9_2) | [Code](https://github.com/jlianglab/BenchmarkTransformers) | [Poster] | [Slides](https://github.com/Mda233/BenchmarkTransformers/blob/main/media/BenchmarkTransformers_DART22.pdf) | Presentation ([YouTube](https://youtu.be/VMyU8UWLPFg))
 
 ## Major results from our work
 
 1. **Pre-training is more vital for transformer-based models than for CNNs in medical imaging.**
 
-<p align="center"><img width=90% alt="Result1" src="figures/Result1.png"></p>
+<p align="center"><img width=90% alt="Result1" src="media/Result1.png"></p>
 
 In medical imaging, good initialization is more vital for transformer-based models than for CNNs.  When training from scratch, transformers perform significantly worse than CNNs on all target tasks. However, with supervised or self-supervised pre-training on ImageNet, transformers can offer the same results as CNNs, highlighting the importance of pre-training when using transformers for medical imaging tasks. We conduct statistical analysis between the best of six pre-trained transformer models and the best of three pre-trained CNN models.
 
@@ -27,7 +27,7 @@ In medical imaging, good initialization is more vital for transformer-based mode
 
 2. **Self-supervised learning based on masked image modeling is a preferable option to supervised baselines for medical imaging.**
 
-<p align="center"><img width=90% alt="Result2" src="figures/Result2.png"></p>
+<p align="center"><img width=90% alt="Result2" src="media/Result2.png"></p>
 
 Self-supervised SimMIM model with the Swin-B backbone outperforms fully- supervised baselines. The best methods are bolded while the second best are underlined. For every target task, we conduct statistical analysis between the best (bolded) vs. others. Green-highlighted boxes indicate no statistically significant difference at the p = 0.05 level.
 
@@ -35,7 +35,7 @@ Self-supervised SimMIM model with the Swin-B backbone outperforms fully- supervi
 
 3. **Self-supervised domain-adaptive pre-training on a larger-scale domain-specific dataset better bridges the domain gap between photographic and medical imaging.**
 
-<p align="center"><img width=90% alt="Result3" src="figures/Result3.png"></p>
+<p align="center"><img width=90% alt="Result3" src="media/Result3.png"></p>
 
 The domain-adapted pre-trained model which utilized a large number of in- domain data (X-rays(926K)) in an SSL manner achieves the best performance across all five target tasks. The best methods are bolded while the second best are underlined. For each target task, we conducted the independent two sample t-test between the best (bolded) vs. others. The absence of a statistically significant difference at the p = 0.05 level is indicated by green-highlighted boxes.
 
@@ -90,6 +90,47 @@ You can download the pretrained models used/developed in our paper as follows:
  
 </tbody></table>
 
+## Fine-tuing of pre-trained models on target task
+1. Download the desired pre-trained model.
+2. Download the desired dataset; you can simply add any other dataset that you wish.
+3. Run the following command by the desired parameters. For example, to finetune our pre-trained ImageNet &#8594; X-rays(926K) model on ChestX-ray14, run:
+```bash
+python main_classification.py --data_set ChestXray14  \
+--model swin_base \
+--init simmim \
+--pretrained_weights [PATH_TO_MODEL]/simmim_swinb_ImageNet_Xray926k.pth \
+--data_dir [PATH_TO_DATASET] \
+--train_list dataset/Xray14_train_official.txt \
+--val_list dataset/Xray14_val_official.txt \
+--test_list dataset/Xray14_test_official.txt \
+--lr 0.01 --opt sgd --epochs 200 --warmup-epochs 0 --batch_size 64
+```
+
+Or, to evaluate the official released ImageNet models from timm on ChestX-ray14, run:
+```bash
+python main_classification.py --data_set ChestXray14  \
+--model vit_base \
+--init imagenet_21k \
+--data_dir [PATH_TO_DATASET] \
+--train_list dataset/Xray14_train_official.txt \
+--val_list dataset/Xray14_val_official.txt \
+--test_list dataset/Xray14_test_official.txt \
+```
+
+## Citation
+If you use this code or use our pre-trained weights for your research, please cite our paper:
+```
+@inproceedings{Ma2022Benchmarking,
+    title="Benchmarking and Boosting Transformers for Medical Image Classification",
+    author="Ma, DongAo and Hosseinzadeh Taher, Mohammad Reza and Pang, Jiaxuan and Islam, Nahid UI and Haghighi, Fatemeh and Gotway, Michael B and Liang, Jianming",
+    booktitle="Domain Adaptation and Representation Transfer",
+    year="2022",
+    publisher="Springer Nature Switzerland",
+    address="Cham",
+    pages="12--22",
+    isbn="978-3-031-16852-9"
+}
+```
 
 ## Acknowledgement
 This research has been supported in part by ASU and Mayo Clinic through a Seed Grant and an Innovation Grant, and in part by the NIH under Award Number R01HL128785. The content is solely the responsi- bility of the authors and does not necessarily represent the official views of the NIH. This work has utilized the GPUs provided in part by the ASU Research Computing and in part by the Extreme Science and Engineering Discovery En- vironment (XSEDE) funded by the National Science Foundation (NSF) under grant numbers: ACI-1548562, ACI-1928147, and ACI-2005632. The content of this paper is covered by patents pending.
