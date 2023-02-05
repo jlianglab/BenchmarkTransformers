@@ -13,7 +13,7 @@ We benchmark how well existing transformer variants that use various (supervised
 
 International Conference on Medical Image Computing and Computer Assisted Intervention ([MICCAI 2022](https://conferences.miccai.org/2022/en/)); Domain Adaptation and Representation Transfer (DART) 
 
-[Paper](https://link.springer.com/chapter/10.1007/978-3-031-16852-9_2) | [Code](https://github.com/jlianglab/BenchmarkTransformers) | [Poster] | [Slides](https://github.com/Mda233/BenchmarkTransformers/blob/main/media/BenchmarkTransformers_DART22.pdf) | Presentation ([YouTube](https://youtu.be/VMyU8UWLPFg))
+[Paper](https://link.springer.com/chapter/10.1007/978-3-031-16852-9_2) | [Code](https://github.com/jlianglab/BenchmarkTransformers) | [Poster](https://github.com/Mda233/BenchmarkTransformers/blob/main/media/Poster_Benchmarking&Boosting_Final(updated).pdf) | [Slides](https://github.com/Mda233/BenchmarkTransformers/blob/main/media/BenchmarkTransformers_DART22.pdf) | Presentation ([YouTube](https://youtu.be/VMyU8UWLPFg))
 
 ## Major results from our work
 
