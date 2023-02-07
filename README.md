@@ -37,7 +37,8 @@ Self-supervised SimMIM model with the Swin-B backbone outperforms fully- supervi
 
 <p align="center"><img width=90% alt="Result3" src="https://github.com/Mda233/BenchmarkTransformers/blob/main/media/Result3.png"></p>
 
-The domain-adapted pre-trained model which utilized a large number of in- domain data (X-rays(926K)) in an SSL manner achieves the best performance across all five target tasks. The best methods are bolded while the second best are underlined. For each target task, we conducted the independent two sample t-test between the best (bolded) vs. others. The absence of a statistically significant difference at the p = 0.05 level is indicated by green-highlighted boxes.
+The domain-adapted pre-trained model which utilized a large number of in-domain data (X-rays(926K)) in an SSL manner achieves the best performance across all five target tasks. The best methods are bolded while the second best are underlined. For each target task, we conducted the independent two sample t-test between the best (bolded) vs. others. The absence of a statistically significant difference at the p = 0.05 level is indicated by green-highlighted boxes. 
+To check what datasets are used for the domain-adaptive pre-training (X-rays(926K)), please see the [Supplementary material](https://static-content.springer.com/esm/chp%3A10.1007%2F978-3-031-16852-9_2/MediaObjects/538914_1_En_2_MOESM1_ESM.pdf).
 
 </br>
 
