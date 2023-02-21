@@ -186,7 +186,7 @@ def main(args):
 
         classification_engine(args, model_path, output_path, diseases, dataset_train, dataset_val, dataset_test)
     elif args.data_set == "RSNAPneumonia":
-        diseases = ['No Lung Opacity/Not Normal', 'Normal', 'Lung Opacity']
+        diseases = ['Normal', 'No Lung Opacity/Not Normal', 'Lung Opacity']
         dataset_train = RSNAPneumonia(images_path=args.data_dir, file_path=args.train_list,
                                     augment=build_transform_classification(normalize=args.normalization, mode="train"), annotation_percent=args.anno_percent)
 
