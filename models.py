@@ -103,7 +103,9 @@ def build_classification_model(args):
                 model = simmim.create_model(args)
             elif args.init.lower() =="imagenet_1k":
                 model = timm.create_model('swin_base_patch4_window7_224', num_classes=args.num_class, checkpoint_path=args.pretrained_weights)
-
+            elif args.init.lower() == "ark":
+                model = timm.create_model('swin_base_patch4_window7_224', num_classes=args.num_class, pretrained=False)
+                load_pretrained_weights(model, args.init.lower(), args.pretrained_weights)
                 
         elif args.model_name.lower() == "swin_tiny": 
             model = timm.create_model('swin_tiny_patch4_window7_224', num_classes=args.num_class)
@@ -149,7 +151,13 @@ def load_pretrained_weights(model, init, pretrained_weights):
         state_dict = checkpoint['model']
         state_dict = {k.replace('encoder.', ''): v for k, v in state_dict.items() if 'encoder.' in k}
     elif init == "mae":
-        state_dict = checkpoint['model']     
+        state_dict = checkpoint['model']   
+    elif init == "ark":
+        state_dict = checkpoint
+        for k in ['head.weight', 'head.bias', 'head_dist.weight', 'head_dist.bias']:
+          if k in state_dict:
+              print(f"Removing key {k} from pretrained checkpoint")
+              del state_dict[k]   
     else:
         print("Trying to load the checkpoint for {} at {}, but we cannot guarantee the success.".format(init, pretrained_weights))
         
